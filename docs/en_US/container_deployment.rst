@@ -134,12 +134,31 @@ Override the default file path for the server definition list. See the
 /pgadmin4/servers.json mapped file below for more information. See the format
 of the `JSON file <https://www.pgadmin.org/docs/pgadmin4/latest/import_export_servers.html#json-format>`_.
 
+**GUNICORN_LOG_LEVEL**
+
+*Default: -* (info)
+
+Specify another `log level<https://docs.gunicorn.org/en/stable/settings.html#loglevel>`_ for Gunicorn. This goes to error log output.
+ 
 **GUNICORN_ACCESS_LOGFILE**
 
 *Default: -* (stdout)
 
 Specify an output file in which to store the Gunicorn access logs, instead of
 sending them to stdout.
+
+**GUNICORN_ACCESS_LOGFORMAT**
+
+*Default: -* (see `Gunicorn default log format<https://docs.gunicorn.org/en/stable/settings.html#access-log-format>`_)
+
+Specify a custom log format for the Gunicorn access log.
+
+**GUNICORN_ERROR_LOGFILE**
+
+*Default: -* (stderr)
+
+Specify an output file in which to store the Gunicorn error logs, instead of
+sending them to stderr.
 
 **GUNICORN_LIMIT_REQUEST_LINE**
 
