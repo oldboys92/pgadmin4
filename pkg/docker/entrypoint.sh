@@ -102,13 +102,10 @@ else
 fi
 G_WORKER='-w 1'
 G_THREADS='--threads "${GUNICORN_THREADS:-25}"'
-G_LOG_LEVEL=''
+G_LOG_LEVEL='--log-level "${GUNICORN_LOG_LEVEL:--}"'
 G_ACCESS_LOGFILE='--access-logfile "${GUNICORN_ACCESS_LOGFILE:--}"'
 G_ACCESS_LOGFORMAT='--access-logformat "${GUNICORN_ACCESS_LOGFORMAT:--}"'
 G_ERROR_LOGFILE='--error-logfile "${GUNICORN_ERROR_LOGFILE:--}"'
-G_ERROR_LOGFORMAT='--error-logformat "${GUNICORN_ERROR_LOGFORMAT:--}"'
 G_CONFIG='-c gunicorn_config.py'
 
-exec /venv/bin/gunicorn "${G_LIMIT_REQUEST_LINE}" "${G_TIMEOUT}" "${G_BIND}" "${G_WORKER}" "${G_THREADS}" \
-    "${G_ACCESS_LOGFILE}" "${G_ACCESS_LOGFORMAT}" "${G_ERROR_LOGFILE}" "${G_ERROR_LOGFORMAT}" \
-    "${G_PRIV_KEY}" "${G_CERT_FILE}" "${G_CONFIG}" run_pgadmin:app
+exec /venv/bin/gunicorn "${G_LIMIT_REQUEST_LINE}" "${G_TIMEOUT}" "${G_BIND}" "${G_WORKER}" "${G_THREADS}" "${G_ACCESS_LOGFILE}" "${G_ACCESS_LOGFORMAT}" "${G_ERROR_LOGFILE}" "${G_PRIV_KEY}" "${G_CERT_FILE}" "${G_CONFIG}" run_pgadmin:app
