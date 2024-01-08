@@ -89,8 +89,26 @@ TIMEOUT=$(cd /pgadmin4 && /venv/bin/python3 -c 'import config; print(config.SESS
 # NOTE: currently pgadmin can run only with 1 worker due to sessions implementation
 # Using --threads to have multi-threaded single-process worker
 
+G_LIMIT_REQUEST_LINE='--limit-request-line "${GUNICORN_LIMIT_REQUEST_LINE:-8190}"'
+G_TIMEOUT='--timeout "${TIMEOUT}"
 if [ -n "${PGADMIN_ENABLE_TLS}" ]; then
-    exec /venv/bin/gunicorn --limit-request-line "${GUNICORN_LIMIT_REQUEST_LINE:-8190}" --timeout "${TIMEOUT}" --bind "${PGADMIN_LISTEN_ADDRESS:-[::]}:${PGADMIN_LISTEN_PORT:-443}" -w 1 --threads "${GUNICORN_THREADS:-25}" --access-logfile "${GUNICORN_ACCESS_LOGFILE:--}" --keyfile /certs/server.key --certfile /certs/server.cert -c gunicorn_config.py run_pgadmin:app
+    G_BIND='--bind "${PGADMIN_LISTEN_ADDRESS:-[::]}:${PGADMIN_LISTEN_PORT:-443}"'
+    G_PRIV_KEY='--keyfile /certs/server.key'
+    G_CERT_FILE='--certfile /certs/server.cert'
 else
-    exec /venv/bin/gunicorn --limit-request-line "${GUNICORN_LIMIT_REQUEST_LINE:-8190}" --timeout "${TIMEOUT}" --bind "${PGADMIN_LISTEN_ADDRESS:-[::]}:${PGADMIN_LISTEN_PORT:-80}" -w 1 --threads "${GUNICORN_THREADS:-25}" --access-logfile "${GUNICORN_ACCESS_LOGFILE:--}" -c gunicorn_config.py run_pgadmin:app
+    G_BIND='--bind "${PGADMIN_LISTEN_ADDRESS:-[::]}:${PGADMIN_LISTEN_PORT:-80}"'
+    G_PRIV_KEY=''
+    G_CERT_FILE=''
 fi
+G_WORKER='-w 1'
+G_THREADS='--threads "${GUNICORN_THREADS:-25}"'
+G_LOG_LEVEL=''
+G_ACCESS_LOGFILE='--access-logfile "${GUNICORN_ACCESS_LOGFILE:--}"'
+G_ACCESS_LOGFORMAT='--access-logformat "${GUNICORN_ACCESS_LOGFORMAT:--}"'
+G_ERROR_LOGFILE='--error-logfile "${GUNICORN_ERROR_LOGFILE:--}"'
+G_ERROR_LOGFORMAT='--error-logformat "${GUNICORN_ERROR_LOGFORMAT:--}"'
+G_CONFIG='-c gunicorn_config.py'
+
+exec /venv/bin/gunicorn "${G_LIMIT_REQUEST_LINE}" "${G_TIMEOUT}" "${G_BIND}" "${G_WORKER}" "${G_THREADS}" \
+    "${G_ACCESS_LOGFILE}" "${G_ACCESS_LOGFORMAT}" "${G_ERROR_LOGFILE}" "${G_ERROR_LOGFORMAT}" \
+    "${G_PRIV_KEY}" "${G_CERT_FILE}" "${G_CONFIG}" run_pgadmin:app
