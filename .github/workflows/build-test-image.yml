@@ -22,7 +22,7 @@ jobs:
         with:
           push: true
           context: .
-          tag: oldboys92/pgadmin4:mybuild
+          tags: oldboys92/pgadmin4:mybuild
 
       - name: Push image to GHCR
         run: |
