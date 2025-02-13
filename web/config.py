@@ -793,7 +793,8 @@ OAUTH2_CONFIG = [
         # Ex: https://github.com/login/oauth/authorize
         'OAUTH2_AUTHORIZATION_URL': None,
         # sometimes additional authorization parameters are required
-        # see AuthLib support for https://docs.authlib.org/en/latest/client/flask.html#configuration
+        # see AuthLib support for additional authorize parameters
+        # https://docs.authlib.org/en/latest/client/flask.html#configuration
         'OAUTH2_AUTHORIZE_PARAMS': None,
         # server metadata url might optional for your provider
         'OAUTH2_SERVER_METADATA_URL': None,
