@@ -117,6 +117,7 @@ class OAuth2Authentication(BaseAuthentication):
                 client_secret=oauth2_config['OAUTH2_CLIENT_SECRET'],
                 access_token_url=oauth2_config['OAUTH2_TOKEN_URL'],
                 authorize_url=oauth2_config['OAUTH2_AUTHORIZATION_URL'],
+                authorize_params=oauth2_config['OAUTH2_AUTHORIZE_PARAMS'],
                 api_base_url=oauth2_config['OAUTH2_API_BASE_URL'],
                 client_kwargs={'scope': oauth2_config.get(
                     'OAUTH2_SCOPE', 'email profile'),

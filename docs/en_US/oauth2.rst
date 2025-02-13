@@ -32,6 +32,7 @@ and modify the values for the following parameters:
     "OAUTH2_CLIENT_SECRET", "Oauth2 Client Secret"
     "OAUTH2_TOKEN_URL", "Oauth2 Access Token endpoint"
     "OAUTH2_AUTHORIZATION_URL", "Endpoint for user authorization"
+    "OAUTH2_AUTHORIZE_PARAMS", "Extra parameters for authorize endpoint, see https://docs.authlib.org/en/latest/client/flask.html#configuration"
     "OAUTH2_SERVER_METADATA_URL", "Server metadata url for your OAuth2 provider"
     "OAUTH2_API_BASE_URL", "Oauth2 base URL endpoint to make requests simple, ex: *https://api.github.com/*"
     "OAUTH2_USERINFO_ENDPOINT", "User Endpoint, ex: *user* (for github, or *user/emails* if the user's email address is private) and *userinfo* (for google),"

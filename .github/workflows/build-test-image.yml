@@ -1,0 +1,31 @@
+name: Build test container
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: '${{ github.workflow }} @ ${{ github.event.pull_request.head.label || github.head_ref || github.ref }}'
+  cancel-in-progress: true
+
+jobs:
+  build-container:
+    runs-on: ubuntu-22.04
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - name: Build the container
+        uses: docker/build-push-action@v6
+        with:
+          push: true
+          context: .
+          tags: oldboys92/pgadmin4:mybuild
+
+      - name: Push image to GHCR
+        run: |
+          docker buildx imagetools create \
+            --tag ghcr.io/oldboys92/pgadmin4:mybuild \
+            oldboys92/pgadmin4:mybuild
